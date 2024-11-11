@@ -17,7 +17,7 @@ internal class Program
 		list1.next.next.next.next = new ListNode(4);
 
 		//a.MergeTwoLists(list1, list2);
-		int[] nums = { 1,1, 2, 3 };
+		int[] nums = { 5,4, 3,2,1 };
 
 		//TreeNode root;
 		//root = new TreeNode(1);
@@ -33,21 +33,62 @@ internal class Program
 		//root.right.right.left = new TreeNode(9);
 		//solution.PostorderTraversal(root);
 
-		int e = solution.solution(nums);
+		string e = solution.ReverseWords("the sky is blue");
 	}
 }
 public class Solution
 {
+	public string ReverseWords(string s)
+	{
+		StringBuilder sb = new StringBuilder();
+		StringBuilder result = new StringBuilder();
+		int size = s.Length - 1;
+		for (int i = size; i >= 0; i--)
+		{
+			if (s[i] != ' ')
+			{
+				sb.Append(s[i]);
+			}
+			if (s[i] == ' ')
+			{
+				if (sb.Length != 0)
+				{
+					string a = sb.ToString();
+					sb.Clear();
+					char[] charArray = a.ToCharArray();
+					Array.Reverse(charArray);
+					string b = new string(charArray);
+					result.Append(b);
+					result.Append(' ');
+
+				}
+			}
+		}
+		if (sb.Length != 0)
+		{
+			string a = sb.ToString();
+			sb.Clear();
+			char[] charArray = a.ToCharArray();
+			Array.Reverse(charArray);
+			string b = new string(charArray);
+			result.Append(b);
+			result.Append(' ');
+		}
+		string res = result.ToString();
+		if (result[result.Length -1] == ' ')
+		{
+			res = res.Remove(result.Length - 1);
+		}
+		return res;
+	}
 	public int solution(int[] A)
 	{
 		HashSet<int> positives = new HashSet<int>(A.Where(x => x > 0));
 		int smallestMissing = 1;
-
 		while (positives.Contains(smallestMissing))
 		{
 			smallestMissing++;
 		}
-
 		return smallestMissing;
 		//Array.Sort(A);
 		//int[] AwithoutNegativeNumbers = A.Where(x => x >= 0).ToArray();
@@ -63,9 +104,7 @@ public class Solution
 		//		return AWithOutDuplicats[i] + 1;
 		//	}
 		//}
-
 		//return AWithOutDuplicats[AWithOutDuplicats.Length - 1] + 1;
-
 	}
 
 
