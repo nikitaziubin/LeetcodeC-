@@ -17,34 +17,114 @@ internal class Program
 		list1.next.next.next.next = new ListNode(4);
 
 		//a.MergeTwoLists(list1, list2);
-		int[] nums = { 7, 6, 4, 3, 1 };
-		//solution.PlusOne(nums);
-		solution.MaxProfit(nums);
+		int[] nums = { 1,1, 2, 3 };
 
-		TreeNode root;
-		root = new TreeNode(3);
-		root.left = new TreeNode(1);
-		root.left.left = new TreeNode(2);
-		root.left.left.right = new TreeNode(4);
+		//TreeNode root;
+		//root = new TreeNode(1);
+		//root.left = new TreeNode(2);
+		//root.left.left = new TreeNode(4);
 		//root.left.right = new TreeNode(5);
 
 		//root.left.right.left = new TreeNode(6);
 		//root.left.right.right = new TreeNode(7);
 
+		//root.right = new TreeNode(3);
 		//root.right.right = new TreeNode(8);
 		//root.right.right.left = new TreeNode(9);
-		solution.PreorderTraversal(root);
+		//solution.PostorderTraversal(root);
 
-
+		int e = solution.solution(nums);
 	}
 }
 public class Solution
 {
+	public int solution(int[] A)
+	{
+		HashSet<int> positives = new HashSet<int>(A.Where(x => x > 0));
+		int smallestMissing = 1;
+
+		while (positives.Contains(smallestMissing))
+		{
+			smallestMissing++;
+		}
+
+		return smallestMissing;
+		//Array.Sort(A);
+		//int[] AwithoutNegativeNumbers = A.Where(x => x >= 0).ToArray();
+		//int[] AWithOutDuplicats = AwithoutNegativeNumbers.Distinct().ToArray();
+		//if (AWithOutDuplicats.Length == 0)
+		//{
+		//	return 1;
+		//}
+		//for (int i = 0; i < AWithOutDuplicats.Length - 1; ++i)
+		//{
+		//	if (AWithOutDuplicats[i] + 1 != AWithOutDuplicats[i + 1])
+		//	{
+		//		return AWithOutDuplicats[i] + 1;
+		//	}
+		//}
+
+		//return AWithOutDuplicats[AWithOutDuplicats.Length - 1] + 1;
+
+	}
+
+
+
+
 	List<int> result = new List<int>();
 	Stack<TreeNode> stack = new Stack<TreeNode>();
+	public IList<int> PostorderTraversal(TreeNode root)
+	{
+		if (root == null) return result;
+		PostorderTraversallRecursive(root);
+		//result.Add(root.val);
+		PostorderTraversallRecursive(root.right);
+		//PreorderTraversalRecursive(root.right);
+		return result;
+	}
+
+	private TreeNode PostorderTraversallRecursive(TreeNode node)
+	{
+		if (node == null)
+		{
+			return null;
+		}
+		if (node.left != null && node.right != null)
+		{
+			stack.Push(node.right);
+			stack.Push(node.left);
+			node = PostorderTraversallRecursive(node.left);
+			result.Add(node.val);
+			if (node.left != null && node.right != null)
+			{
+				node = PostorderTraversallRecursive(node);
+			}
+			if (node.left != null)
+			{
+				stack.Push(node.left);
+				node = PostorderTraversallRecursive(node.left);
+				result.Add(node.val);
+				//node = stack.Pop();
+			}
+			if (node.right != null)
+			{
+				stack.Push(node.right);
+				node = PostorderTraversallRecursive(node.right);
+				result.Add(node.val);
+				//node = stack.Pop();
+			}
+		}
+		if (stack.Count > 0)
+		{
+			//result.Add(node.val);
+			return stack.Pop();
+		}
+		return null;
+	}
+
 	public IList<int> PreorderTraversal(TreeNode root)
 	{
-		if (root == null) return result;	
+		if (root == null) return result;
 		result.Add(root.val);
 		PreorderTraversalRecursive(root.left);
 		PreorderTraversalRecursive(root.right);
@@ -52,18 +132,18 @@ public class Solution
 	}
 	private TreeNode PreorderTraversalRecursive(TreeNode node)
 	{
-		if ( node == null )
+		if (node == null)
 		{
 			return null;
 		}
 		result.Add(node.val);
-		
-		if ( node.left != null)
+
+		if (node.left != null)
 		{
 			stack.Push(node);
 			node = PreorderTraversalRecursive(node.left);
 		}
-		if ( node.right != null )
+		if (node.right != null)
 		{
 			stack.Push(node);
 			node = PreorderTraversalRecursive(node.right);
