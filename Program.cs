@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using Microsoft.VisualBasic;
+using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Xml.Schema;
 using static Solution;
 
 internal class Program
@@ -17,7 +19,7 @@ internal class Program
 		list1.next.next.next.next = new ListNode(4);
 
 		//a.MergeTwoLists(list1, list2);
-		int[] nums = { 5,4, 3,2,1 };
+		int[] nums = { 2, 2, 1, 1, 1, 2, 2 };
 
 		//TreeNode root;
 		//root = new TreeNode(1);
@@ -33,11 +35,50 @@ internal class Program
 		//root.right.right.left = new TreeNode(9);
 		//solution.PostorderTraversal(root);
 
-		string e = solution.ReverseWords("the sky is blue");
+		int e = solution.TrailingZeroes(7);
 	}
 }
 public class Solution
 {
+	public int TrailingZeroes(int n)
+	{
+        if (n == 0)
+		{
+			return 0;
+		}
+        int factorial = 1;
+		int i = 1;
+		while (i <= n)
+		{
+			factorial = factorial * i;
+			i++;
+			if (factorial.ToString().Contains("0"))
+			{
+
+			}
+		}
+		int countZero = 0;
+		char[] charArray = factorial.ToString().ToCharArray();
+		countZero = charArray.Where(x => x == '0').Count();
+		return countZero;
+	}
+	public int MajorityElement(int[] nums)
+	{
+		int result = 0;
+		int prevCount = 0;
+		HashSet<int> setWithoutDuplicats = new HashSet<int>(nums.Select(x => x));
+		for (int i = 0; i < setWithoutDuplicats.Count; i++)
+		{
+			int a = setWithoutDuplicats.ToArray()[i];
+			int count = nums.Where(x => x == a).Count();
+			if (prevCount < count)
+			{
+				prevCount = count;
+				result = a;
+			}
+		}
+		return result;
+	}
 	public string ReverseWords(string s)
 	{
 		StringBuilder sb = new StringBuilder();
